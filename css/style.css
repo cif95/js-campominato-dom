@@ -46,3 +46,8 @@ section#game div#grid div.cell.clicked{
 	color: black;
 	background-color: #6cdbf5;
 }
+
+section#game div#grid div.cell.clicked-mine{
+	background-color: rgb(177, 35, 35);
+}
+
