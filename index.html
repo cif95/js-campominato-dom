@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- bootstrap css -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<!-- google font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300&display=swap" rel="stylesheet">
+	<!-- custom css stylesheet  -->
+	<link rel="stylesheet" href="css/style.css">
+	<title>Js Minesweeper Dom</title>
+</head>
+<body>
+	<header class="bg-dark">
+		<!-- top bar -->
+		<nav class="navbar navbar-dark">
+			<div class="container-fluid px-md-5">
+				<a class="navbar-brand fs-2" href="#">
+					<img src="img/header.png" alt="mine">
+					Minesweeper
+				</a>
+				<!-- game level difficulty options -->
+				<select id="game-level" class="form-select ms-auto w-25 bg-dark text-white" aria-label="game level select">
+					<option selected>Choose a difficulty level</option>
+					<option value="1">Easy</option>
+					<option value="2">Intermediate</option>
+					<option value="3">Difficult</option>
+				</select>
+				<!-- play button -->
+				<button id="play-btn" class="btn btn-danger ms-3">Play</button>
+				<!-- reset button -->
+				<button id="reset-btn" class="btn btn-outline-info ms-3">Reset</button>
+			</div>
+		</nav>
+	</header>
+	<!-- / top bar -->
+	<!-- main -->
+	<main>
+		<!-- section game grid -->
+		<section id="game" class="bg-dark">
+			<div class="container-fluid">
+				<div class="row justify-content-center align-items-center">
+					<div class="col-12 col-lg-6">
+						<!-- grid -->
+						<div id="grid" class="mx-auto clearfix pb-5"></div>
+						<div id="score"class="text-white fs-5 ms-5"></div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<!-- / main -->
+	<!-- footer -->
+	<footer class="bg-dark text-white">
+		<div class="container-fluid px-md-5">
+			<div class="row pt-4">
+				<div class="col-12">
+					<h6>Made with &hearts;</h6>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>
