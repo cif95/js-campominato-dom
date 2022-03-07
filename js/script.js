@@ -1,11 +1,3 @@
-// Consegna
-// L'utente indica un livello di difficoltà in base al quale viene generata una griglia di gioco quadrata, in cui ogni cella contiene un numero tra quelli compresi in un range:
-// con difficoltà 1 => tra 1 e 100
-// con difficoltà 2 => tra 1 e 81
-// con difficoltà 3 => tra 1 e 49
-// Quando l'utente clicca su ogni cella, la cella cliccata si colora di azzurro.
-
-
 // Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. I numeri nella lista delle bombe non possono essere duplicati.
 // In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati
 // - abbiamo calpestato una bomba
@@ -62,6 +54,8 @@ function generateGridCellElement (innerContent, cellsPerRow) {
 function generateGame(){
 	let cellsNumber;
 	let cellsPerRow;
+	let score = 0;
+
 	switch(parseInt(levelSelectElement.value)){
 		case 1 :
 			cellsNumber = 100;
@@ -75,21 +69,26 @@ function generateGame(){
 		default :
 		scoreOutput.innerHTML ='Please select a level, then press play';
 	}
+
 	cellsPerRow = Math.sqrt(cellsNumber);
+	let mines = generateMines(16, cellsNumber);
+	console.log(mines);
+
 	for ( let i = 1; i <= cellsNumber; i++){
 		const currentGridCell = generateGridCellElement(i, cellsPerRow);
 		currentGridCell.addEventListener('click', function() {
 			if (!mines.includes(i)) {
+				score++;
+				addInnerHTMLContent(scoreOutput, `Your score is : ${score}`)
 				currentGridCell.classList.add('clicked');
 			} else {
 				currentGridCell.classList.add('clicked-mine');
+				addInnerHTMLContent(scoreOutput, `You Lose ! Your score is : ${score} points`)
 			}
 		})
 		grid.appendChild(currentGridCell);
 	}
 
-	let mines = generateMines(16, cellsNumber);
-	console.log(mines);
 }
 
 
@@ -125,6 +124,17 @@ function generateMines (minesNumber, cellsNumber) {
 		minesList.push(generateUniqueRandomInt(minesList, 0, cellsNumber));
 	}
 	return minesList;
+}
+
+
+/**Function that adds HTML content inside DOM Element inner HTML
+ * 
+ * @param {*} DOMElement dom element where to add content
+ * @param {*} content content that will be added
+ * @returns the addition of content inside the dom element inner html
+ */
+function addInnerHTMLContent (DOMElement, content) {
+	return DOMElement.innerHTML = content;
 }
 
 
