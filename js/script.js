@@ -16,17 +16,16 @@ const levelSelectElement = document.getElementById('game-level');
 
 
 document.querySelector('#play-btn').addEventListener('click', function() {
-	grid.innerHTML = '';
-	scoreOutput.innerHTML = '';
+	addInnerHTMLContent(grid, '');
+	addInnerHTMLContent(scoreOutput, '');
 	generateGame();
 })
 
 document.getElementById('reset-btn').addEventListener('click', function() {
-	grid.innerHTML = '';
-	scoreOutput.innerHTML = '';
+	addInnerHTMLContent(grid, '');
+	addInnerHTMLContent(scoreOutput, '');
 	levelSelectElement.value = "Choose a difficulty level";
 })
-
 
 
 
@@ -41,8 +40,7 @@ function generateGridCellElement (innerContent, cellsPerRow) {
 	gridCell.classList.add('cell');
 	gridCell.style.width = `calc(100% / ${cellsPerRow}`;
 	gridCell.style.height = gridCell.style.width;
-	gridCell.innerHTML = `
-	<span>${innerContent}</span>`
+	addInnerHTMLContent(gridCell, `<span>${innerContent}</span>`);
 	return gridCell;
 }
 
@@ -55,7 +53,7 @@ function generateGame(){
 	let cellsNumber;
 	let cellsPerRow;
 	let score = 0;
-
+	let cellsClicked = 0;
 	switch(parseInt(levelSelectElement.value)){
 		case 1 :
 			cellsNumber = 100;
@@ -67,27 +65,39 @@ function generateGame(){
 			cellsNumber = 49;
 			break;
 		default :
-		scoreOutput.innerHTML ='Please select a level, then press play';
+		addInnerHTMLContent(scoreOutput, 'Please select a level, then press play');
 	}
-
 	cellsPerRow = Math.sqrt(cellsNumber);
 	let mines = generateMines(16, cellsNumber);
 	console.log(mines);
-
 	for ( let i = 1; i <= cellsNumber; i++){
 		const currentGridCell = generateGridCellElement(i, cellsPerRow);
 		currentGridCell.addEventListener('click', function() {
-			if (!mines.includes(i)) {
+			let isMine = false;
+			if (!mines.includes(i)) { // se la cella cliccata non è una mina
+				cellsClicked++;
 				score++;
 				addInnerHTMLContent(scoreOutput, `Your score is : ${score}`)
 				currentGridCell.classList.add('clicked');
-			} else {
+				if (cellsClicked == cellsNumber - 16){ // se si raggiunge il numero massimo possibile di numeri consentiti...
+					addInnerHTMLContent(scoreOutput, `Game over ! Your score is : ${score} points`);
+				}
+			} else { 
 				currentGridCell.classList.add('clicked-mine');
-				addInnerHTMLContent(scoreOutput, `You Lose ! Your score is : ${score} points`)
+				addInnerHTMLContent(scoreOutput, `Game over ! Your score is : ${score} points`);
+				isMine = true;
+			}
+			console.log(isMine);
+			if (isMine) {
+				//evitare che si possa cliccare su altre celle
+				// il software scopre tutte le bombe nascoste
 			}
 		})
 		grid.appendChild(currentGridCell);
 	}
+}
+
+function gameOver() {
 
 }
 
