@@ -50,6 +50,9 @@ function generateGridCellElement (innerContent, cellsPerRow) {
  * @returns a game board based on difficulty level selected
  */
 function generateGame(){
+
+	let isGameOver = false;
+
 	let cellsNumber;
 	let cellsPerRow;
 	let score = 0;
@@ -69,36 +72,27 @@ function generateGame(){
 	}
 	cellsPerRow = Math.sqrt(cellsNumber);
 	let mines = generateMines(16, cellsNumber);
-	console.log(mines);
 	for ( let i = 1; i <= cellsNumber; i++){
 		const currentGridCell = generateGridCellElement(i, cellsPerRow);
 		currentGridCell.addEventListener('click', function() {
-			let isMine = false;
-			if (!mines.includes(i)) { // se la cella cliccata non è una mina
-				cellsClicked++;
-				score++;
-				addInnerHTMLContent(scoreOutput, `Your score is : ${score}`)
-				currentGridCell.classList.add('clicked');
-				if (cellsClicked == cellsNumber - 16){ // se si raggiunge il numero massimo possibile di numeri consentiti...
+			if( !isGameOver){
+				if (!mines.includes(i)) { // se la cella cliccata non è una mina
+					cellsClicked++;
+					score++;
+					addInnerHTMLContent(scoreOutput, `Your score is : ${score}`)
+					currentGridCell.classList.add('clicked');
+					if (cellsClicked == cellsNumber - 16){ // se si raggiunge il numero massimo possibile di numeri consentiti...
+						addInnerHTMLContent(scoreOutput, `Game over ! Your score is : ${score} points`);
+					}
+				} else { 
+					currentGridCell.classList.add('clicked-mine');
 					addInnerHTMLContent(scoreOutput, `Game over ! Your score is : ${score} points`);
+					isGameOver = true;
 				}
-			} else { 
-				currentGridCell.classList.add('clicked-mine');
-				addInnerHTMLContent(scoreOutput, `Game over ! Your score is : ${score} points`);
-				isMine = true;
-			}
-			console.log(isMine);
-			if (isMine) {
-				//evitare che si possa cliccare su altre celle
-				// il software scopre tutte le bombe nascoste
 			}
 		})
 		grid.appendChild(currentGridCell);
 	}
-}
-
-function gameOver() {
-
 }
 
 
