@@ -42,6 +42,12 @@ section#game div#grid div.cell{
 	box-shadow: inset 0px 0px 5px 1px #03d0ff;
 }
 
+section#game div#grid div.cell img{
+	width: 60%;
+	box-shadow: 0px 0px 8px 9px #DC3545;
+}
+
+
 section#game div#grid div.cell.clicked{
 	color: black;
 	background-color: #6cdbf5;
